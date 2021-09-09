@@ -10,11 +10,34 @@ const Main = () => {
     const [movies, setMovies] = useState([]);
     console.log('movies', movies)
     const [searchTerm, setSearchTerm] = useState('');
+    console.log('searchTerm', searchTerm)
+
+    useEffect(() => {
+      getMovies(FEATURED_API);
+    },[])
+
+
+
+    const getMovies = (API) => {
+      fetch(API)
+        .then(res => res.json())
+        .then(res => setMovies(res.results))
+    }
+
+    const handleSearch = (e) => {
+      e.preventDefault();
+
+      if(searchTerm){
+        getMovies(SEARCH_API + searchTerm);  // "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=matrix";
+        setSearchTerm("");
+      }
+
+    }
 
 
     return (
         <>
-        <form className="search" onSubmit={null}>
+        <form className="search" onSubmit={handleSearch}>
             <input 
                 type="search"
                 className="search-input"
