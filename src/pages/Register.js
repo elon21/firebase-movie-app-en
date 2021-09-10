@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom';
+import {createUser} from '../auth/firebase';
 
 const Register = () => {
     const history = useHistory();
@@ -7,6 +8,10 @@ const Register = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleRegister = () => {
+        
+    }
 
 
     return (
