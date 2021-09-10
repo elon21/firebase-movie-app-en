@@ -10,7 +10,7 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const handleRegister = () => {
-        
+        createUser(email, password);
     }
 
 
@@ -38,7 +38,7 @@ const Register = () => {
                         <label for="password" className="form-label display-4">Password</label>
                         <input type="password" className="form-control" id="password" placeholder="Enter your password address..." onChange={e => setPassword(e.target.value)}/>
                     </div>
-                    <input type="button" className="btn btn-primary form-control" value="Register" onClick={null}/>
+                    <input type="button" className="btn btn-primary form-control" value="Register" onClick={handleRegister}/>
                 </form>
                 <button className="btn btn-primary form-control" onClick={null} >Continue with Google</button>
             </div>

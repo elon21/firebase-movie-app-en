@@ -17,7 +17,7 @@ export const createUser = async (email, password) => {
     .then((userCredential) => {
       // Signed in 
       var user = userCredential.user;
-      console.log('user', user)
+      console.log('REGISTER user', user)
       // ...
     })
     .catch((error) => {
@@ -27,8 +27,30 @@ export const createUser = async (email, password) => {
     });
 }
 
+export const SignIn = async (email, password) => {
+   await firebase.auth().signInWithEmailAndPassword(email, password)
+  .then((userCredential) => {
+    // Signed in
+    var user = userCredential.user;
+    console.log('SIGNIN user', user)
+    // ...
+  })
+  .catch((error) => {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+}
 
-
+export const userObserver = async () => {
+    await firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log('OBSERVER: ', user)
+        } else {
+          // User is signed out
+          // ...
+        }
+      });
+}
 
 
 
