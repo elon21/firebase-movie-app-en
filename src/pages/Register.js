@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom';
-import {createUser} from '../auth/firebase';
+import {createUser, SignUpProvider} from '../auth/firebase';
 
 const Register = () => {
     const history = useHistory();
@@ -10,7 +10,9 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const handleRegister = () => {
-        createUser(email, password);
+        const displayName = firstName + " " + lastName;
+        createUser(email, password, displayName);
+        history.push('/');
     }
 
 
@@ -40,7 +42,7 @@ const Register = () => {
                     </div>
                     <input type="button" className="btn btn-primary form-control" value="Register" onClick={handleRegister}/>
                 </form>
-                <button className="btn btn-primary form-control" onClick={null} >Continue with Google</button>
+                <button className="btn btn-primary form-control" onClick={() => SignUpProvider()} >Continue with Google</button>
             </div>
         </div>
     )

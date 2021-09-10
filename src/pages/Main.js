@@ -32,9 +32,11 @@ const Main = () => {
     const handleSearch = (e) => {
       e.preventDefault();
 
-      if(searchTerm){
+      if(searchTerm && currentUser){
         getMovies(SEARCH_API + searchTerm);  // "https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=matrix";
         setSearchTerm("");
+      } else {
+        alert('Please login to search a movie...')
       }
 
     }
@@ -51,7 +53,7 @@ const Main = () => {
             />
         </form>
         <div className="movie-container">
-           {movies.map((movie) => <MovieCard key={movie.id} {...movie}/>)}
+           {movies.map((movie) => <MovieCard key={movie.id} {...movie} currentUser={currentUser} />)}
         </div>
         </AuthContext.Provider>
     )

@@ -12,19 +12,30 @@ const firebaseApp = firebase.initializeApp({
     appId: "1:551495615781:web:246a3d97b46e698572c6cc"
   });
 
-export const createUser = async (email, password) => {
-    await firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in 
-      var user = userCredential.user;
-      console.log('REGISTER user', user)
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // ..
-    });
+export const createUser = async (email, password, displayName) => {
+    try {
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in 
+          var user = userCredential.user;
+          console.log('REGISTER user', user)
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ..
+        });
+
+        const currentUser = firebase.auth().currentUser;
+        await currentUser.updateProfile({
+            displayName: displayName
+          })
+
+    } catch (error) {
+        
+    }
+
 }
 
 export const SignIn = async (email, password) => {
@@ -41,15 +52,32 @@ export const SignIn = async (email, password) => {
   });
 }
 
-export const userObserver = async () => {
+export const userObserver = async (setCurrentUser) => {
     await firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           console.log('OBSERVER: ', user)
+          setCurrentUser(user);
         } else {
           // User is signed out
           // ...
+          setCurrentUser(null);
         }
       });
+}
+
+export const Logout = async () => {
+    await firebase.auth().signOut();
+}
+
+
+export const SignUpProvider = async () => {
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+        promt : 'select_account'
+      });
+
+    firebase.auth()
+      .signInWithPopup(provider)
 }
 
 
